@@ -1,0 +1,11 @@
+<!-- src/app/todo-add/todo-add.component.html -->
+<div>
+    <input [(ngModel)]="newTodoTitle" placeholder="Add new task" />
+    <select [(ngModel)]="newTodoPriority">
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high">High</option>
+    </select>
+    <button (click)="onAddTodo()">Add</button>
+  </div>
+  

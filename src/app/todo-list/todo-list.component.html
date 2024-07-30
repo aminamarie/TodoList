@@ -1,0 +1,7 @@
+<!-- src/app/todo-list/todo-list.component.html -->
+<digi-todo-add></digi-todo-add>
+<ul>
+  <li *ngFor="let todo of todos$ | async">
+    <digi-todo-item [todo]="todo" (toggleCompletion)="onToggleTodoCompletion($event)" (remove)="onRemoveTodo($event)"></digi-todo-item>
+  </li>
+</ul>
