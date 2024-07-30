@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TodoService } from '../todo.service';
 
 @Component({
   selector: 'digi-todo-add',
@@ -11,15 +10,17 @@ import { TodoService } from '../todo.service';
   styleUrls: ['./todo-add.component.css']
 })
 export class TodoAddComponent {
-  newTodoTitle: string = '';
-  newTodoPriority: 'low' | 'medium' | 'high' = 'medium'; // Valeur par défaut
-  constructor(private todoService: TodoService) {}
+  newTodo: string = '';
+  newPriority: string = '';
+
+  @Output() addTodo: EventEmitter<{ title: string, priority: string }> = new EventEmitter<{ title: string, priority: string }>();
 
   onAddTodo() {
-    if (this.newTodoTitle.trim()) {
-      this.todoService.addTodo(this.newTodoTitle, this.newTodoPriority);
-      this.newTodoTitle = '';
-      this.newTodoPriority = 'medium'; // Réinitialiser la priorité après ajout
+    if (this.newTodo.trim() && this.newPriority.trim()) {
+      console.log('Adding new todo:', this.newTodo, 'with priority:', this.newPriority);
+      this.addTodo.emit({ title: this.newTodo, priority: this.newPriority });
+      this.newTodo = ''; // Réinitialise le champ de saisie
+      this.newPriority = ''; // Réinitialise le champ de priorité
     }
   }
 }

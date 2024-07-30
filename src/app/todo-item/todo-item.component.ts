@@ -13,13 +13,16 @@ import { PriorityPipe } from '../priority.pipe';
 export class TodoItemComponent {
   @Input() todo!: Todo;
   @Output() toggleCompletion = new EventEmitter<number>();
-  @Output() remove = new EventEmitter<number>();
+  @Output() remove: EventEmitter<number> = new EventEmitter<number>();
 
-  onToggleCompletion() {
+  onToggleCompletion(toggleBtn: HTMLButtonElement) {
     this.toggleCompletion.emit(this.todo.id);
+    toggleBtn.textContent = this.todo.completed ? 'Invalider' : 'Valider';
   }
 
   onRemove() {
     this.remove.emit(this.todo.id);
   }
+
+
 }

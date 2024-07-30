@@ -1,11 +1,7 @@
-<!-- src/app/todo-add/todo-add.component.html -->
-<div>
-    <input [(ngModel)]="newTodoTitle" placeholder="Add new task" />
-    <select [(ngModel)]="newTodoPriority">
-      <option value="low">Low</option>
-      <option value="medium">Medium</option>
-      <option value="high">High</option>
-    </select>
-    <button (click)="onAddTodo()">Add</button>
-  </div>
-  
+
+
+<div class="input-group mb-3">
+  <input [(ngModel)]="newTodo" type="text" class="form-control" placeholder="Add new task">
+  <input [(ngModel)]="newPriority" type="text" class="form-control" placeholder="Priority">
+  <button class="btn btn-primary" (click)="onAddTodo()">Add Task</button>
+</div>
