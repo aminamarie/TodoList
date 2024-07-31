@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 export interface Todo {
-  id: number;
+  id: string;
   title: string;
   completed: boolean;
   priority?: string; // Ajout de la propriété de priorité
@@ -13,25 +14,32 @@ export interface Todo {
   providedIn: 'root'
 })
 export class TodoService {
-  private apiURL = 'http://localhost:3000/tasks' //url de l'api
+  private apiURL = 'http://localhost:3000/tasks'; // URL de l'API
 
   constructor(private http: HttpClient) {}
 
-  getTodos(): Observable<Todo[]>{
-    return this.http.get<Todo[]>(this.apiURL)
+  getTodos(): Observable<Todo[]> {
+    return this.http.get<Todo[]>(this.apiURL);
   }
 
-  addTodo(title:string, priority:string):Observable<void>{
-      return this.http.post<void>(this.apiURL, {title, priority})
-    }
-
-  removeTodo(id: number): Observable<void> {
-      return this.http.delete<void>(`${this.apiURL}/${id}`);
+  addTodo(title: string, priority: string): Observable<void> {
+    return this.http.post<void>(this.apiURL, { title, priority });
   }
 
-  toggleTodoCompletion(id: number) {
+  removeTodo(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiURL}/${id}`);
+  }
+
+  toggleTodoCompletion(id: string): Observable<Todo> {
     return this.http.patch<Todo>(`${this.apiURL}/${id}`, { completed: true });
   }
+
+  getTodoById(id: string): Observable<Todo> {
+    return this.http.get<Todo>(`${this.apiURL}/${id}`).pipe(
+      catchError(error => {
+        console.error(`Todo with ID ${id} not found`, error);
+        return throwError(() => new Error('Not Found'));
+      })
+    );
+  }
 }
-
-

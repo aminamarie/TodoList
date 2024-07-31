@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { TodoService, Todo } from '../todo.service';
 import { TodoItemComponent } from '../todo-item/todo-item.component';
 import { TodoAddComponent } from '../todo-add/todo-add.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'digi-todo-list',
@@ -17,7 +18,7 @@ export class TodoListComponent {
   newTodo: string = '';
   newTodoPriority: string = '';
 
-  constructor(private todoService: TodoService) {
+  constructor(private todoService: TodoService, private router: Router) {
     this.todos$ = this.todoService.getTodos();
   }
 
@@ -34,24 +35,21 @@ export class TodoListComponent {
   }
 
 
-  onToggleTodoCompletion(id: number): void {
+  onToggleTodoCompletion(id: string): void {
     this.todoService.toggleTodoCompletion(id).subscribe(() => {
       this.todos$ = this.todoService.getTodos(); // Met à jour la liste des tâches
     });
   }
 
-  onRemoveTodo(id: number): void {
+  onRemoveTodo(id: string): void {
     this.todoService.removeTodo(id).subscribe(() => {
       this.todos$ = this.todoService.getTodos(); // Met à jour la liste des tâches
     });
+    this.router.navigate(['/delete', id]);  
   }
-  
 
-
-
-
-
-
-
-
+  viewTodoDetails(todo: Todo) {
+    console.log(`Navigating to /detail/${todo.id}`);
+    this.router.navigate(['/view', todo.id]);  
+  }  
 }

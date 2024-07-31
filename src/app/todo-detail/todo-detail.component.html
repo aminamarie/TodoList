@@ -1,0 +1,10 @@
+<div *ngIf="todo">
+    <h1>Todo Details</h1>
+    <p><strong>ID:</strong> {{ todo.id }}</p>
+    <p><strong>Name:</strong> {{ todo.title }}</p>
+</div>
+  
+  <div *ngIf="!todo">
+    <p>Loading...</p>
+  </div>
+  

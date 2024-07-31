@@ -2,9 +2,9 @@
 <digi-todo-add (addTodo)="addTask($event)"></digi-todo-add>
 
 <ul>
-  <li *ngFor="let todo of todos$ | async">
+  <li *ngFor="let todo of todos$ | async" (click)="viewTodoDetails(todo)">
     <digi-todo-item [todo]="todo" (remove)="onRemoveTodo($event)"></digi-todo-item>
   </li>
-</ul>
+</ul> 
 
 

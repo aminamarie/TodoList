@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TodoService, Todo } from '../todo.service';
+import { Todo } from '../todo.service';
 import { PriorityPipe } from '../priority.pipe';
 
 @Component({
@@ -12,8 +12,9 @@ import { PriorityPipe } from '../priority.pipe';
 })
 export class TodoItemComponent {
   @Input() todo!: Todo;
-  @Output() toggleCompletion = new EventEmitter<number>();
-  @Output() remove: EventEmitter<number> = new EventEmitter<number>();
+  @Output() toggleCompletion = new EventEmitter<string>();
+  @Output() remove: EventEmitter<string> = new EventEmitter<string>();
+  @Output() view: EventEmitter<Todo> = new EventEmitter<Todo>();
 
   onToggleCompletion(toggleBtn: HTMLButtonElement) {
     this.toggleCompletion.emit(this.todo.id);
@@ -24,5 +25,7 @@ export class TodoItemComponent {
     this.remove.emit(this.todo.id);
   }
 
-
+  onView() {
+    this.view.emit(this.todo);
+  }
 }

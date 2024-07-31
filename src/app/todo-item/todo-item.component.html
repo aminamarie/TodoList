@@ -11,6 +11,11 @@
   <button (click)="onToggleCompletion(toggleBtn)" [ngClass]="{'btn-success': !todo.completed, 'btn-warning': todo.completed}" #toggleBtn>
     {{ todo.completed ? 'Invalider' : 'Valider' }}
   </button>
+
+
+  <button (click)="onView()">Afficher</button>
+
+  
   <!-- #toggleBtn: pour obtenir une référence à l'élément du bouton. -->
 
 
